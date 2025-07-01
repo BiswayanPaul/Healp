@@ -7,7 +7,7 @@ import { FcGoogle } from 'react-icons/fc';
 import { Eye, EyeOff } from 'lucide-react';
 
 
-import type { AuthenticateWithRedirectParams } from '@clerk/types';
+import type { AuthenticateWithRedirectParams, ClerkAPIError } from '@clerk/types';
 
 
 import { Input } from "@/components/ui/input";
@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from 'next/link';
+import { isClerkAPIResponseError } from '@clerk/nextjs/errors';
 
 type AuthFormProps = {
     type: 'signin' | 'signup';
@@ -33,7 +34,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ type }) => {
     const [password, setPassword] = useState('');
     const [pendingVerification, setPendingVerification] = useState(false);
     const [code, setCode] = useState('');
-    const [error, setError] = useState('');
+    const [error, setError] = useState<ClerkAPIError[]>();
     const [showPassword, setShowPassword] = useState(false);
 
     // Signup hook
@@ -71,9 +72,9 @@ const AuthForm: React.FC<AuthFormProps> = ({ type }) => {
             });
             await signUp.prepareEmailAddressVerification({ strategy: 'email_code' });
             setPendingVerification(true);
-        } catch (err: any) {
-            console.error(err);
-            setError(err.errors?.[0]?.message || 'Sign‑up failed');
+        } catch (err) {
+            if (isClerkAPIResponseError(err)) setError(err.errors)
+            console.error(JSON.stringify(err, null, 2))
         }
     }
 
@@ -121,9 +122,9 @@ const AuthForm: React.FC<AuthFormProps> = ({ type }) => {
             } else {
                 console.log(result);
             }
-        } catch (err: any) {
-            console.error(err);
-            setError(err.errors?.[0]?.message || 'Verification failed');
+        } catch (err) {
+            if (isClerkAPIResponseError(err)) setError(err.errors)
+            console.error(JSON.stringify(err, null, 2))
         }
     }
 
@@ -209,7 +210,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ type }) => {
                                 </div>
                             </div>
 
-                            {error && <p className='text-sm text-red-600'>{error}</p>}
+                            {error && <p className='text-sm text-red-600'>{error[0].message}</p>}
                             <div id="clerk-captcha" />
 
                             <Button type='submit' className='w-full cursor-pointer'>
@@ -241,7 +242,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ type }) => {
                                     required
                                 />
                             </div>
-                            {error && <p className='text-sm text-red-600'>{error}</p>}
+                            {error && <p className='text-sm text-red-600'>{error[0].message}</p>}
                             <Button type='submit' className='w-full cursor-pointer'>
                                 Verify Email
                             </Button>
