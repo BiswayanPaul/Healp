@@ -96,9 +96,9 @@ const AuthForm: React.FC<AuthFormProps> = ({ type }) => {
             } else {
                 console.log(attempt)
             }
-        } catch (err: any) {
-            console.error(err);
-            setError(err.errors?.[0]?.message || 'Sign‑in failed');
+        } catch (err) {
+            if (isClerkAPIResponseError(err)) setError(err.errors)
+            console.error(JSON.stringify(err, null, 2))
         }
     }
 
