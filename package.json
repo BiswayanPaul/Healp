@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "postbuild": "prisma generate && prisma migrate deploy && prisma db seed"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
