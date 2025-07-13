@@ -1,0 +1,79 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Hospital {
+  id         Int    @id @default(autoincrement())
+  name       String
+  address    String
+  city       String
+  state      String
+  speciality String
+  ratings    Float
+
+  departments Department[]
+  doctorLinks DoctorHospital[] // ⬅️ M:N relation via join table
+}
+
+model Department {
+  id       Int    @id @default(autoincrement())
+  name     String
+  bedCount Int
+
+  hospitalId Int
+  hospital   Hospital @relation(fields: [hospitalId], references: [id], onDelete: Cascade)
+
+  doctors  Doctor[]  @relation("DepartmentDoctors")
+  patients Patient[]
+}
+
+model Doctor {
+  id         Int    @id @default(autoincrement())
+  name       String
+  degree     String
+  speciality String
+  rating     Float
+  age        Int
+  email      String @unique
+
+  departments   Department[]     @relation("DepartmentDoctors")
+  patients      Patient[]
+  hospitalLinks DoctorHospital[] // ⬅️ M:N relation via join table
+}
+
+model DoctorHospital {
+  doctorId   Int
+  hospitalId Int
+
+  doctor   Doctor   @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+  hospital Hospital @relation(fields: [hospitalId], references: [id], onDelete: Cascade)
+
+  @@id([doctorId, hospitalId]) // composite primary key
+}
+
+model Patient {
+  id            Int    @id @default(autoincrement())
+  name          String
+  age           Int
+  contact       String
+  familyContact String
+  diagnosis     String
+
+  departmentId Int
+  doctorId     Int?
+
+  department Department @relation(fields: [departmentId], references: [id], onDelete: Cascade)
+  doctor     Doctor?    @relation(fields: [doctorId], references: [id], onDelete: SetNull)
+}
