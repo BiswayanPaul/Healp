@@ -4,7 +4,7 @@ import Fuse from "fuse.js";
 
 const HOSPITAL_KEYWORDS = ['hospital', 'hospitals', 'clinic', 'medical college'];
 const DOCTOR_KEYWORDS = ['doctor', 'doctors', 'physician', 'specialist'];
-const PACKAGE_KEYWORDS = ['package', 'packages', 'test', 'checkup'];
+// const PACKAGE_KEYWORDS = ['package', 'packages', 'test', 'checkup'];
 
 export async function GET(req: NextRequest) {
     const rawQuery = req.nextUrl.searchParams.get("query") || "";
@@ -12,7 +12,7 @@ export async function GET(req: NextRequest) {
 
     const includeAllHospitals = HOSPITAL_KEYWORDS.some(k => query.includes(k));
     const includeAllDoctors = DOCTOR_KEYWORDS.some(k => query.includes(k));
-    const includeAllPackages = PACKAGE_KEYWORDS.some(k => query.includes(k));
+    // const includeAllPackages = PACKAGE_KEYWORDS.some(k => query.includes(k));
 
     let doctors = [];
     let hospitals = [];
