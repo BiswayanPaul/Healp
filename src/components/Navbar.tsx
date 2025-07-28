@@ -6,6 +6,17 @@ import { X } from 'lucide-react'
 import ModeToggle from './Dark-Mode-Toggle-Button'
 import { useAuth, UserButton } from '@clerk/nextjs'
 import { useRouter } from 'next/navigation'
+import { ROUTES } from "@/constants/routePath"
+import Link from 'next/link'
+
+const navLinks = [
+    { label: 'Find Hospitals', path: ROUTES.PAGE.FIND_HOSPITALS },
+    { label: 'Medical Services', path: ROUTES.PAGE.SERVICES },
+    { label: 'Health Packages', path: ROUTES.PAGE.FIND_PACKAGES },
+    { label: 'About Us', path: ROUTES.PAGE.ABOUT },
+    { label: 'Contacts', path: ROUTES.PAGE.CONTACT },
+]
+
 
 // Prevent hydration errors with dynamic import
 
@@ -30,22 +41,24 @@ const Navbar = () => {
                             ☰
                         </Button>
                     </div>
-                    <div className='font-extrabold text-2xl text-white hover:text-blue-300 hover:scale-105 hover:cursor-pointer transition-all duration-300 ease-in-out'>
+                    <Link href="/" className='font-extrabold text-2xl text-white hover:text-blue-300 hover:scale-105 hover:cursor-pointer transition-all duration-300 ease-in-out'>
                         HEALP
-                    </div>
+                    </Link>
+
                 </div>
 
                 {/* Center nav links */}
                 <div className='hidden md:flex items-center gap-6'>
-                    {['Find Hospitals', 'Medical Services', 'Health Packages', 'About Us', 'Contacts'].map((text, idx) => (
-                        <li
-                            key={idx}
-                            className='list-none text-white hover:text-[#98A1BC] hover:scale-105 hover:cursor-pointer transition-all duration-300 ease-in-out hover:underline'
-                        >
-                            {text}
-                        </li>
+                    {navLinks.map(({ label, path }) => (
+                        <Link href={path} key={path}>
+                            <li className='list-none text-white hover:text-[#98A1BC] hover:scale-105 hover:cursor-pointer transition-all duration-300 ease-in-out hover:underline'>
+                                {label}
+                            </li>
+                        </Link>
                     ))}
                 </div>
+
+
 
                 {/* Right side: Login + Toggle */}
                 <div className='flex items-center gap-2'>
@@ -78,16 +91,16 @@ const Navbar = () => {
                 </div>
 
                 <ul className='flex flex-col gap-4 p-4 text-lg'>
-                    {['Find Hospital', 'Medical Services', 'Health Packages', 'About Us', 'Contacts'].map((text, idx) => (
-                        <li
-                            key={idx}
-                            className='hover:text-blue-700 hover:dark:text-blue-300 hover:cursor-pointer transition-all duration-200'
-                            onClick={() => setSidebarOpen(false)}
-                        >
-                            {text}
-                        </li>
+                    {navLinks.map(({ label, path }) => (
+                        <Link href={path} key={path} onClick={() => setSidebarOpen(false)}>
+                            <li className='hover:text-blue-700 hover:dark:text-blue-300 hover:cursor-pointer transition-all duration-200'>
+                                {label}
+                            </li>
+                        </Link>
                     ))}
                 </ul>
+
+
             </div>
         </>
     )

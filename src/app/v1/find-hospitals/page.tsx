@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { Hospital } from "@prisma/client";
+import { ROUTES } from "@/constants/routePath";
 
 const FindHospital = () => {
     const [hospitals, setHospitals] = useState<Hospital[]>([]);
@@ -9,7 +10,7 @@ const FindHospital = () => {
     // fetch once on mount
     useEffect(() => {
         async function fetchHospitals() {
-            const res = await fetch("/api/hospitals");
+            const res = await fetch(ROUTES.API.FIND_HOSPITALS);
             const data: Hospital[] = await res.json();
             setHospitals(data);
         }
