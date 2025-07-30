@@ -36,16 +36,32 @@ Healp is a modern, full-stack healthcare web application that helps users find d
  ## 🔧 Getting Started – Local Setup To run this project on your local machine, follow these steps: 
  
  ### 1. Clone the Repository 
- ```bash git clone https://github.com/BiswayanPaul/Healp.git cd Healp ``` 
+ ```bash 
+ git clone https://github.com/BiswayanPaul/Healp.git cd Healp 
+ ``` 
  ### 2. Install Dependencies 
- ```bash npm install ``` 
+ ```bash 
+ npm install 
+ ``` 
  
  ### 3. Setup Environment Variables 
- Copy the `.env.example` file and create a `.env` file with your actual credentials: ```bash cp .env.example .env ``` 
- 
- Now open the `.env` file and replace the placeholder values with your own: ```env # .env DATABASE_URL=your_postgresql_connection_string CLERK_SECRET_KEY=your_clerk_secret CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key ``` 
- > ✅ Note: You can get these keys from your PostgreSQL provider and Clerk dashboard. 
- ### 4. Generate Prisma Client ```bash npx prisma generate ``` 
- ### 5. Run the Development Server ```bash npm run dev ``` 
- 
- Visit [http://localhost:3000](http://localhost:3000) in your browser — you're now up and running! 🎉
+ Copy the `.env.example` file and create a `.env` file with your actual credentials: 
+ ```bash 
+ cp .env.example .env 
+ ``` 
+ Open the `.env` file and replace the placeholder values: 
+ ```
+ env 
+ # Clerk Configuration NEXT_PUBLIC_CLERK_SIGN_IN_URL=/auth/signin/ NEXT_PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL=/ NEXT_PUBLIC_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL=/ NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key CLERK_SECRET_KEY=your_clerk_secret_key 
+ ``` 
+ > 🧠 You can get the Clerk keys from your [Clerk dashboard](https://dashboard.clerk.com/). 
+ ### 4. Generate Prisma Client 
+ ```bash 
+ npx prisma generate 
+ ```
+### 5. Run the Development Server 
+```bash 
+npm run dev 
+``` 
+
+Visit [http://localhost:3000](http://localhost:3000) in your browser — you're now up and running! 🚀
