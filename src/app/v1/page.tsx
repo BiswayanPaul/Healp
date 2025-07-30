@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import React, { useState } from 'react'
-import hero_page_image from '@/assets/hero_page_image.jpg'
+// import hero_page_image from '@/assets/hero_page_image.jpg'
 import { FaSearch } from "react-icons/fa"
 import { useRouter } from 'next/navigation'
 import { ROUTES } from '@/constants/routePath'
@@ -20,9 +20,11 @@ const Home = () => {
         <div>
             <div className="relative h-full">
                 <Image
-                    src={hero_page_image}
-                    alt='Hero Page Image'
-                    className='w-screen h-[60vh] object-cover blur-xs'
+                    src="/assets/hero_page_image.jpg"
+                    alt="Hero Page Image"
+                    width={1920}
+                    height={1080}
+                    className="w-screen h-[60vh] object-cover blur-xs"
                     priority
                 />
 
