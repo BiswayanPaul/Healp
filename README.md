@@ -44,16 +44,44 @@ Healp is a modern, full-stack healthcare web application that helps users find d
  npm install 
  ``` 
  
- ### 3. Setup Environment Variables 
- Copy the `.env.example` file and create a `.env` file with your actual credentials: 
- ```bash 
- cp .env.example .env 
- ``` 
- Open the `.env` file and replace the placeholder values: 
- ```
- env 
- # Clerk Configuration NEXT_PUBLIC_CLERK_SIGN_IN_URL=/auth/signin/ NEXT_PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL=/ NEXT_PUBLIC_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL=/ NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key CLERK_SECRET_KEY=your_clerk_secret_key 
- ``` 
+ ### 3. Setup Environment Variables
+
+Copy the example file to `.env`:
+
+```bash
+cp .env.example .env
+```
+
+```env
+# Clerk Configuration
+NEXT_PUBLIC_CLERK_SIGN_IN_URL=/auth/signin/
+NEXT_PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL=/
+NEXT_PUBLIC_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL=/
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
+CLERK_SECRET_KEY=your_clerk_secret_key
+```
+```env 
+# Database Configuration 
+DATABASE_URL=your_pgsql_db_string 
+DIRECT_URL=your_supabase_direct_url 
+```
+
+
+>⚠️ **Note for Non-Supabase Users**:
+If you're not using Supabase, you do not need the DIRECT_URL.
+In that case, update your prisma/schema.prisma file and remove the directUrl field from the datasource block like this:
+
+```
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+```
+
  > 🧠 You can get the Clerk keys from your [Clerk dashboard](https://dashboard.clerk.com/). 
  ### 4. Generate Prisma Client 
  ```bash 
