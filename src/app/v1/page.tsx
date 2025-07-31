@@ -2,10 +2,15 @@
 
 import Image from 'next/image'
 import React, { useState } from 'react'
-// import hero_page_image from '@/assets/hero_page_image.jpg'
-import { FaSearch } from "react-icons/fa"
+import { FaSearch } from 'react-icons/fa'
 import { useRouter } from 'next/navigation'
 import { ROUTES } from '@/constants/routePath'
+import { motion } from 'framer-motion'
+import DoctorsSection from '@/components/DoctorSection'
+import HospitalsSection from '@/components/HospitalSection'
+import Footer from '@/components/FooterSection'
+
+
 
 const Home = () => {
     const [searchTerm, setSearchTerm] = useState("")
@@ -17,54 +22,96 @@ const Home = () => {
     }
 
     return (
-        <div>
-            <div className="relative h-full">
-                <Image
-                    src="/assets/hero_page_image.jpg"
-                    alt="Hero Page Image"
-                    width={1920}
-                    height={1080}
-                    className="w-screen h-[60vh] object-cover blur-xs"
-                    priority
-                />
+        <>
+            {/* 💡 HERO SECTION */}
+            <section className="w-full min-h-[90vh] flex flex-col md:flex-row items-center justify-between overflow-hidden bg-[#f0f4f8] dark:bg-gray-900 transition-colors duration-300">
 
-                <div className="absolute inset-0 flex flex-col items-center justify-center text-white px-4">
-                    {/* 🔍 Search Input Section */}
-                    <div className='flex justify-center items-center w-full'>
+                {/* Left Content */}
+                <motion.div
+                    initial={{ opacity: 0, x: -60 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 1.2, ease: 'easeInOut' }}
+                    viewport={{ once: true }}
+                    className="w-full md:w-1/2 px-6 md:px-16 py-10 flex flex-col justify-center gap-6 z-10"
+                >
+
+                    <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white leading-tight">
+                        Your Health, Our Priority
+                    </h1>
+                    <p className="text-lg text-gray-700 dark:text-gray-300 max-w-md">
+                        Search for top doctors, hospitals, and services with ease.
+                    </p>
+
+                    {/* Search Bar */}
+                    <div className="flex w-full max-w-md overflow-hidden border border-gray-300 dark:border-gray-700 rounded-md bg-white dark:bg-gray-800 shadow-sm">
                         <input
                             type="text"
-                            placeholder="Search doctors, hospitals, packages, services..."
+                            placeholder="Search doctors, hospitals..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                             onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-                            className="bg-white m-2 px-4 py-2 rounded-md text-black w-full max-w-md shadow-md"
+                            className="flex-1 px-4 py-2 text-black dark:text-white bg-transparent focus:outline-none"
                         />
-                        <div
+                        <button
                             onClick={handleSearch}
-                            className='border border-white rounded-md hover:scale-105 hover:cursor-pointer hover:bg-white hover:text-black transition-all duration-150'
+                            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 transition"
                         >
-                            <FaSearch className='transition-all duration-150 size-8 rounded-full p-2 hover:scale-105' />
-                        </div>
+                            <FaSearch />
+                        </button>
                     </div>
 
-                    {/* Buttons Section */}
-                    <div className="mt-4 flex gap-4">
-                        <button className="bg-gray-800 dark:bg-white dark:text-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700 dark:hover:bg-gray-200 transition-all duration-200">
+                    {/* Action Buttons */}
+                    <div className="flex flex-wrap gap-4 mt-4">
+                        <button className="transition-all duration-300 transform hover:scale-105 hover:shadow-lg bg-blue-700 hover:bg-blue-800 text-white px-6 py-2 rounded-xl">
                             Book Appointment
                         </button>
-                        <button className="bg-gray-800 dark:bg-white dark:text-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700 dark:hover:bg-gray-200 transition-all duration-200">
-                            Find Packages
-                        </button>
+
                         <button
                             onClick={() => router.push(ROUTES.PAGE.FIND_DOCTOR)}
-                            className="bg-gray-800 dark:bg-white dark:text-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700 dark:hover:bg-gray-200 transition-all duration-200"
+                            className="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-100 px-6 py-2 rounded-xl hover:bg-gray-300 dark:hover:bg-gray-600 transition duration-200"
                         >
                             Find Doctor
                         </button>
                     </div>
-                </div>
-            </div>
-        </div>
+                </motion.div>
+
+                {/* Right Image */}
+                <motion.div
+                    className="relative w-full md:w-1/2 h-[40vh] md:h-[90vh] rounded-l-[3rem] overflow-hidden shadow-2xl"
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 1, ease: 'easeInOut' }}
+                    viewport={{ once: true }}
+                >
+                    <Image
+                        src="/assets/hero_page_image.jpg"
+                        alt="Hero"
+                        fill
+                        className="object-cover"
+                        priority
+                    />
+                </motion.div>
+
+            </section>
+            <motion.section
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, ease: 'easeInOut' }}
+                viewport={{ once: true }}
+            >
+                {/* section content */}
+                {/* 💡 Scrollable Sections Below */}
+                <DoctorsSection />
+                <div className="w-full h-[2px] bg-gradient-to-r from-blue-500 to-transparent my-12"></div>
+
+                <HospitalsSection />
+                <div className="w-full h-[2px] bg-gradient-to-r from-blue-500 to-transparent my-12"></div>
+
+                <Footer />
+            </motion.section>
+
+
+        </>
     )
 }
 
