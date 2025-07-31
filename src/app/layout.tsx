@@ -35,6 +35,11 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
+        <head>
+          {/* Force index and follow manually */}
+          <meta name="robots" content="index, follow" />
+          <meta name="googlebot" content="index, follow" />
+        </head>
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
