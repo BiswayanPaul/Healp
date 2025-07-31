@@ -24,7 +24,8 @@ const Home = () => {
     return (
         <>
             {/* 💡 HERO SECTION */}
-            <section className="w-full min-h-[90vh] flex flex-col md:flex-row items-center justify-between overflow-hidden bg-[#f0f4f8] dark:bg-gray-900 transition-colors duration-300">
+            <section className="w-full min-h-[90vh] flex flex-col-reverse md:flex-row items-center justify-between overflow-hidden bg-[#f0f4f8] dark:bg-gray-900 transition-colors duration-300">
+
 
                 {/* Left Content */}
                 <motion.div
@@ -77,7 +78,7 @@ const Home = () => {
 
                 {/* Right Image */}
                 <motion.div
-                    className="relative w-full md:w-1/2 h-[40vh] md:h-[90vh] rounded-l-[3rem] overflow-hidden shadow-2xl"
+                    className="relative w-full md:w-1/2 h-[30vh] md:h-[90vh] overflow-hidden shadow-2xl rounded-t-[2rem] md:rounded-l-[3rem] md:rounded-t-none"
                     initial={{ opacity: 0, scale: 0.95 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 1, ease: 'easeInOut' }}
@@ -91,6 +92,7 @@ const Home = () => {
                         priority
                     />
                 </motion.div>
+
 
             </section>
             <motion.section

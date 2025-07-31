@@ -83,32 +83,63 @@ const Navbar = () => {
                 </div>
             </nav>
 
+            {/* Backdrop Overlay */}
             {sidebarOpen && (
                 <div
-                    className='fixed inset-0 bg-black/50 z-40'
+                    className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm"
                     onClick={() => setSidebarOpen(false)}
                 />
             )}
 
+            {/* Sidebar Drawer */}
             <div className={clsx(
-                'fixed top-0 left-0 h-full w-3/4 sm:w-1/2 bg-white dark:bg-gray-800 z-50 transition-transform duration-300 ease-in-out shadow-2xl',
+                'fixed top-0 left-0 h-full w-[80%] max-w-xs bg-white dark:bg-gray-900 z-50 shadow-xl transition-transform duration-300 ease-in-out flex flex-col',
                 sidebarOpen ? 'translate-x-0' : '-translate-x-full'
             )}>
-                <div className='flex items-center justify-between px-4 py-3 border-b dark:border-gray-600'>
-                    <h2 className='text-lg font-bold text-blue-800 dark:text-white'>HEALP</h2>
+
+                {/* Header */}
+                <div className="flex items-center justify-between px-5 py-4 border-b border-gray-200 dark:border-gray-700">
+                    <h2 className="text-xl font-bold text-blue-800 dark:text-blue-300">HEALP</h2>
                     <Button variant="ghost" onClick={() => setSidebarOpen(false)}>
-                        <X className='text-blue-800 dark:text-white' />
+                        <X className="h-6 w-6 text-blue-800 dark:text-white" />
                     </Button>
                 </div>
-                <ul className='flex flex-col gap-4 p-4'>
+
+                {/* Optional: User Info */}
+                {isSignedIn && (
+                    <div className="px-5 py-4 border-b border-gray-200 dark:border-gray-700 flex items-center gap-3">
+                        <UserButton afterSignOutUrl="/" />
+                        <div className="text-sm font-medium text-gray-800 dark:text-gray-200">Welcome!</div>
+                    </div>
+                )}
+
+                {/* Nav Links */}
+                <ul className="flex flex-col px-5 py-4 gap-4 overflow-y-auto">
                     {navLinks.map(({ label, path }) => (
-                        <Link href={path} key={path} onClick={() => setSidebarOpen(false)}>
-                            <li className='text-gray-800 dark:text-white hover:text-blue-700 dark:hover:text-blue-300 transition'>
-                                {label}
-                            </li>
+                        <Link
+                            href={path}
+                            key={path}
+                            onClick={() => setSidebarOpen(false)}
+                            className="block text-base font-medium text-gray-700 dark:text-gray-100 hover:bg-blue-100 dark:hover:bg-blue-800 px-4 py-2 rounded-md transition"
+                        >
+                            {label}
                         </Link>
                     ))}
                 </ul>
+
+                {/* Bottom Actions */}
+                <div className="mt-auto px-5 py-4 border-t border-gray-200 dark:border-gray-700 flex justify-between items-center">
+                    <Button
+                        onClick={() => {
+                            setSidebarOpen(false)
+                            if (!isSignedIn) router.push('/auth/signin')
+                        }}
+                        variant="outline"
+                        className="w-full text-blue-700 dark:text-white border-blue-500 dark:border-gray-500"
+                    >
+                        {isSignedIn ? 'Dashboard' : 'Login'}
+                    </Button>
+                </div>
             </div>
         </>
     )
