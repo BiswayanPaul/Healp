@@ -19,8 +19,12 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  robots: { index: false, follow: false },
   title: "HEALP",
   description: "Making Healthcare Easy",
+  verification: {
+    google: "IdNT47KdHr3CBwzloYC_dhV_mNTUOd4Zxwm2ALwUeFE",
+  },
 };
 
 export default function RootLayout({
