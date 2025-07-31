@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://healp.vercel.app
+
+# Sitemaps
+Sitemap: https://healp.vercel.app/sitemap.xml

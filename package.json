@@ -7,7 +7,7 @@
     "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
-    "postbuild": "prisma migrate deploy"
+    "postbuild": "prisma migrate deploy && next-sitemap"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
@@ -27,6 +27,7 @@
     "fuse.js": "^7.1.0",
     "lucide-react": "^0.525.0",
     "next": "15.3.4",
+    "next-sitemap": "^4.2.3",
     "next-themes": "^0.4.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
