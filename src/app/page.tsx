@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+// import IndexPage from '@/components/IndexPage'
 
 const Home = () => {
   const router = useRouter()
@@ -11,7 +12,7 @@ const Home = () => {
     router.refresh()
   }, [router])
 
-  return null
+  return null;
 }
 
 export default Home
